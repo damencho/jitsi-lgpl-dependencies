@@ -223,7 +223,7 @@
       <linkerarg value="-o" location="end" if="is.running.macos" />
       <linkerarg value="libjnffmpeg.jnilib" location="end" if="is.running.macos" />
       <linkerarg value="-dynamiclib" if="is.running.macos" />
-      <linkerarg value="-Wl,-read_only_relocs,suppress" if="is.running.macos" />
+      <!--<linkerarg value="-Wl,-read_only_relocs,suppress" if="is.running.macos" />-->
 
       <!-- Windows specific flags -->
       <compilerarg value="-D_WIN32_WINNT=0x0502" if="is.running.windows" />
