@@ -245,7 +245,7 @@
   </target>
 
   <target name="-update-darwin-binary" if="is.running.macos">
-    <exec command="install_name_tool">
+    <exec executable="install_name_tool">
       <arg value="-change"/>
       <arg value="/usr/local/lib/libopenh264.4.dylib"/>
       <arg value="libopenh264.4.dylib"/>
