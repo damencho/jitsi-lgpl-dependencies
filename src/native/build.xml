@@ -327,9 +327,9 @@
     <echo message="-Dlame: path to lame directory (ffmpeg JNI compilation)." />
     <echo message="-Dffmpeg: path to ffmpeg directory (ffmpeg JNI compilation)." />
     <echo message="" />
-    <echo message="Please note that external libraries such as ffmpeg, x264, and lame have to be compiled" />
+    <echo message="Please note that external libraries such as ffmpeg, openh264, and lame have to be compiled" />
     <echo message="(follow READMEs in relevant directory) before trying to compile libjnffmpeg"  />
-    <echo message="When compiling libjnffmpeg you have to tell ant script the directory of ffmpeg and x264 with"  />
-    <echo message="-Dffmpeg=/path/to/ffmpeg and -Dx264=/path/to/x264 -Dlame=/path/to/lame"  />
+    <echo message="When compiling libjnffmpeg you have to tell ant script the directory of ffmpeg and openh264 with"  />
+    <echo message="-Dffmpeg=/path/to/ffmpeg and -Dopenh264=/path/to/openh264 -Dlame=/path/to/lame"  />
   </target>
 </project>
