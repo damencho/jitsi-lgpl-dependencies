@@ -774,50 +774,6 @@ Java_org_jitsi_impl_neomedia_codec_FFmpeg_avpicture_1fill
                     (int) width, (int) height);
 }
 
-JNIEXPORT jlong JNICALL
-Java_org_jitsi_impl_neomedia_codec_FFmpeg_get_1filtered_1video_1frame
-    (JNIEnv *env, jclass clazz, jlong input, jint width, jint height,
-        jint pixFmt, jlong buffer, jlong ffsink, jlong output)
-{
-    AVFrame *input_ = (AVFrame *) (intptr_t) input;
-    AVFilterContext *buffer_ = (AVFilterContext *) (intptr_t) buffer;
-    AVFilterBufferRef *ref = NULL;
-
-    input_->width = width;
-    input_->height = height;
-    input_->format = pixFmt;
-    if (av_buffersrc_write_frame(buffer_, input_) == 0)
-    {
-        AVFilterContext *ffsink_ = (AVFilterContext *) (intptr_t) ffsink;
-
-        if (ff_request_frame(ffsink_->inputs[0]) == 0)
-        {
-            ref = (AVFilterBufferRef *) (ffsink_->priv);
-            if (ref)
-            {
-                AVFrame *output_ = (AVFrame *) (intptr_t) output;
-
-                /*
-                 * The data of cur_buf will be returned into output so it needs
-                 * to exist at least while output needs it. So take ownership of
-                 * cur_buf and the user of output will unref it when they are
-                 * done with output.
-                 */
-                ffsink_->priv = NULL;
-
-                memcpy(output_->data, ref->data, sizeof(output_->data));
-                memcpy(
-                    output_->linesize,
-                    ref->linesize,
-                    sizeof(output_->linesize));
-                output_->interlaced_frame = ref->video->interlaced;
-                output_->top_field_first = ref->video->top_field_first;
-            }
-        }
-    }
-    return (jlong) (intptr_t) ref;
-}
-
 /*
  * Class:     org_jitsi_impl_neomedia_codec_FFmpeg
  * Method:    memcpy
