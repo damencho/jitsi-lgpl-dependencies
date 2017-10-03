@@ -163,8 +163,7 @@
   <target name="ffmpeg" description="Build ffmpeg shared library" depends="init-native">
     <fail message="ffmpeg repository not set!" unless="ffmpeg" />
     <fail message="lame repository not set!" unless="lame" />
-    <fail message="vo-amrwbenc repository not set!" unless="voamrwbenc" />
-    <fail message="x264 repository not set!" unless="x264" />
+    <fail message="openh264 repository not set!" unless="openh264" />
 
     <cc outtype="shared" name="gcc" outfile="${native_install_dir}/jnffmpeg" objdir="${obj}">
       <!-- common compiler flags -->
@@ -190,8 +189,7 @@
       -->
       <linkerarg value="-L${lame}/libmp3lame" />
       <linkerarg value="-L${lame}/libmp3lame/.libs" />
-      <linkerarg value="-L${voamrwbenc}/.libs" />
-      <linkerarg value="-L${x264}" />
+      <linkerarg value="-L${openh264}" />
       <linkerarg value="-m${arch}" />
       <linkerarg value="-Wl,-z,relro" if="is.running.debian"/>
       <!--
@@ -205,8 +203,7 @@
       <linkerarg value="-lavutil" location="end" />
       <linkerarg value="-lswscale" location="end" />
       <linkerarg value="-lmp3lame" location="end" />
-      <linkerarg value="-lvo-amrwbenc" location="end" />
-      <linkerarg value="-lx264" location="end" />
+      <linkerarg value="-lopenh264" location="end" />
 
       <!-- Unix specific flags -->
       <compilerarg value="-I${system.JAVA_HOME}/include" if="is.running.unix" />
@@ -240,6 +237,8 @@
 
       <fileset file="${src}/main/c/org/jitsi/impl/neomedia/codec/FFmpeg.c" />
     </cc>
+
+    <!--install_name_tool -change "/usr/local/lib/libopenh264.4.dylib" "libopenh264.4.dylib" ${native_install_dir}/libjnffmpeg.jnilib-->
 
     <delete dir="${obj}" failonerror="false" />
     <delete file="${native_install_dir}/history.xml" failonerror="false" />
