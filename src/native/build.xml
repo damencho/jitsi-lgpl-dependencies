@@ -238,10 +238,20 @@
       <fileset file="${src}/main/c/org/jitsi/impl/neomedia/codec/FFmpeg.c" />
     </cc>
 
-    <!--install_name_tool -change "/usr/local/lib/libopenh264.4.dylib" "libopenh264.4.dylib" ${native_install_dir}/libjnffmpeg.jnilib-->
+    <antcall target="-update-darwin-binary"/>
 
     <delete dir="${obj}" failonerror="false" />
     <delete file="${native_install_dir}/history.xml" failonerror="false" />
+  </target>
+
+  <target name="-update-darwin-binary" if="is.running.macos">
+    <exec command="install_name_tool">
+      <arg value="-change"/>
+      <arg value="/usr/local/lib/libopenh264.4.dylib"/>
+      <arg value="libopenh264.4.dylib"/>
+      <arg value="${native_install_dir}/libjnffmpeg.jnilib"/>
+    </exec>
+
   </target>
 
   <!-- compile jng722 library -->
