@@ -169,7 +169,7 @@
       <!-- common compiler flags -->
       <compilerarg value="-D_JNI_IMPLEMENTATION_" />
       <compilerarg value="-D_XOPEN_SOURCE=600" />
-      <compilerarg value="-fPIC" />
+      <!--<compilerarg value="-fPIC" />-->
       <compilerarg value="-I${ffmpeg}" />
       <compilerarg value="-I${basedir}/src/main/include" />
       <compilerarg value="-m${arch}" />
@@ -238,20 +238,46 @@
       <fileset file="${src}/main/c/org/jitsi/impl/neomedia/codec/FFmpeg.c" />
     </cc>
 
-    <antcall target="-update-darwin-binary"/>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libopenh264.4.dylib"/>
+      <param name="dstname" value="libopenh264.4.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libmp3lame.0.dylib"/>
+      <param name="dstname" value="libmp3lame.0.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libavformat.57.dylib"/>
+      <param name="dstname" value="libavformat.57.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libavcodec.57.dylib"/>
+      <param name="dstname" value="libavcodec.57.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libavfilter.6.dylib"/>
+      <param name="dstname" value="libavfilter.6.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libavutil.55.dylib"/>
+      <param name="dstname" value="libavutil.55.dylib"/>
+    </antcall>
+    <antcall target="-update-darwin-ffmpeg-binary">
+      <param name="srcname" value="/usr/local/lib/libswscale.4.dylib"/>
+      <param name="dstname" value="libswscale.4.dylib"/>
+    </antcall>
 
     <delete dir="${obj}" failonerror="false" />
     <delete file="${native_install_dir}/history.xml" failonerror="false" />
   </target>
 
-  <target name="-update-darwin-binary" if="is.running.macos">
+  <target name="-update-darwin-ffmpeg-binary" if="is.running.macos">
     <exec executable="install_name_tool">
       <arg value="-change"/>
-      <arg value="/usr/local/lib/libopenh264.4.dylib"/>
-      <arg value="libopenh264.4.dylib"/>
+      <arg value="${srcname}"/>
+      <arg value="${dstname}"/>
       <arg value="${native_install_dir}/libjnffmpeg.jnilib"/>
     </exec>
-
   </target>
 
   <!-- compile jng722 library -->
