@@ -169,7 +169,7 @@
       <!-- common compiler flags -->
       <compilerarg value="-D_JNI_IMPLEMENTATION_" />
       <compilerarg value="-D_XOPEN_SOURCE=600" />
-      <!--<compilerarg value="-fPIC" />-->
+      <compilerarg value="-fPIC" />
       <compilerarg value="-I${ffmpeg}" />
       <compilerarg value="-I${basedir}/src/main/include" />
       <compilerarg value="-m${arch}" />
